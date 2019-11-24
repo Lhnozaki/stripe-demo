@@ -1,0 +1,27 @@
+.container {
+  width: 100vw;
+  height: 10vh;
+  background: rgb(62, 60, 60);
+  color: rgb(240, 235, 235);
+  text-transform: uppercase;
+  display: flex;
+}
+
+.logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    padding: 10px 30px;
+    background: rgb(122, 199, 45);
+    display: none;
+  }
+}
