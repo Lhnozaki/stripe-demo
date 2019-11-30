@@ -18,19 +18,20 @@
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
-  button {
-    text-transform: uppercase;
-    width: 250px;
-    height: 50px;
-    font-size: 1rem;
-    cursor: pointer;
-    color: white;
-    background: rgb(233, 170, 54);
-    border: none;
-    transition: 0.3s;
-    &:hover {
-      background: orange;
-    }
+}
+
+button {
+  text-transform: uppercase;
+  width: 250px;
+  height: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+  background: rgb(233, 170, 54);
+  border: none;
+  transition: 0.3s;
+  &:hover {
+    background: orange;
   }
 }
 
