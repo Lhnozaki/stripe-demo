@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./Cart.module.scss";
 import Form from "../Form";
-import StripeCheckout from "react-stripe-checkout";
+// import StripeCheckout from "react-stripe-checkout";
 
 class Cart extends Component {
   constructor(props) {

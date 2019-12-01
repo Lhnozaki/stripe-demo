@@ -5,19 +5,61 @@
   position: absolute;
   top: 25%;
   left: 25%;
-  input,
-  .StripeElement {
-    display: block;
-    margin: 10px 0 20px 0;
-    max-width: 500px;
-    padding: 10px 14px;
-    font-size: 1em;
-    font-family: "Source Code Pro", monospace;
-    box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-      rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-    border: 0;
-    outline: 0;
-    border-radius: 4px;
-    background: white;
+  padding: 50px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
+.CardDemo {
+  height: 100%;
+  width: 100%;
+  form {
+    margin: 40px auto;
+    button {
+      margin-top: 10px;
+    }
   }
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+.bt {
+  margin-top: 30px;
+  button {
+    text-transform: uppercase;
+    width: 250px;
+    height: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: white;
+    background: lightgreen;
+    border: none;
+  }
+}
+
+.close {
+  border: none;
+  background: none;
+  width: 100px;
+  color: black;
+  transition: 0.3s;
+  font-size: 3rem;
+  line-height: none;
+  &:hover {
+    background: none;
+  }
+}
+
+.error {
+  color: red;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+.par {
+  border-bottom: 1px solid grey;
 }
