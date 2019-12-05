@@ -8,13 +8,15 @@ import {
   // PaymentRequestButtonElement,
   injectStripe
 } from "react-stripe-elements";
+// import Axios from "axios";
 
 class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      errorMessage: ""
+      Message: "",
+      success: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,22 +26,37 @@ class Form extends Component {
   }
 
   handleChange = ({ error }) => {
+    this.setState({ Message: "" });
     if (error) {
-      this.setState({ errorMessage: error.message });
+      this.setState({ Message: error.message });
     }
   };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
-    if (this.props.stripe) {
-      this.props.stripe.createToken().then(this.props.handleResult);
+  async handleSubmit(e) {
+    e.preventDefault();
+
+    let { error, token } = await this.props.stripe.createToken({
+      name: "John Wick"
+    });
+
+    if (error) {
+      this.setState({ Message: "Please input valid card" });
     } else {
-      console.log("Stripe.js hasn't loaded yet.");
+      let response = await fetch("/api/charge", {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: token.id
+      });
+      if (response.ok) console.log("Purchase Complete!");
+      this.setState({
+        Message: "Payment Successful!",
+        success: !this.state.success
+      });
     }
-  };
+  }
 
   removeErrorMsg = () => {
-    this.setState({ errorMessage: "" });
+    this.setState({ Message: "" });
   };
 
   handleClose = () => {
@@ -90,7 +107,7 @@ class Form extends Component {
                   />
                 </div>
                 <div className={styles.error} role="alert">
-                  {this.state.errorMessage ? this.state.errorMessage : ""}
+                  {this.state.Message ? this.state.Message : ""}
                 </div>
                 <div className={styles.bt}>
                   <button>Pay</button>
@@ -98,7 +115,7 @@ class Form extends Component {
               </form>
             </div>
             <button onClick={this.handleClose} className={styles.close}>
-              X
+              close
             </button>
           </>
         )}
