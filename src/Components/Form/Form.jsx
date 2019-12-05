@@ -18,7 +18,7 @@ class Form extends Component {
       success: false,
       name: "",
       email: "",
-      ZIP: 0
+      amount: 1000000
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,7 +27,6 @@ class Form extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleNameInputs = this.handleNameInputs.bind(this);
     this.handleEmailInputs = this.handleEmailInputs.bind(this);
-    this.handleZIPInputs = this.handleZIPInputs.bind(this);
   }
 
   handleNameInputs = e => {
@@ -36,10 +35,6 @@ class Form extends Component {
 
   handleEmailInputs = e => {
     this.setState({ email: e.target.value });
-  };
-
-  handleZIPInputs = e => {
-    this.setState({ ZIP: e.target.value });
   };
 
   handleChange = ({ error }) => {
@@ -53,18 +48,28 @@ class Form extends Component {
     e.preventDefault();
 
     let { error, token } = await this.props.stripe.createToken({
-      name: "John Wick"
+      name: this.state.name,
+      email: this.state.email
     });
+
+    let amount = this.state.amount;
 
     if (error) {
       this.setState({ Message: "Please input valid card" });
     } else {
       let response = await fetch("/api/charge", {
         method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: token.id
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, amount })
+        // token.id
       });
-      if (response.ok) console.log("Purchase Complete!");
+
+      console.log(token);
+
+      if (response.ok) {
+        console.log("Purchase Complete!");
+      }
+
       this.setState({
         Message: "Payment Successful!",
         success: !this.state.success
@@ -129,12 +134,6 @@ class Form extends Component {
                   autoComplete="new-password"
                   onChange={this.handleEmailInputs}
                 />
-                <input
-                  type="number"
-                  placeholder="ZIP"
-                  autoComplete="new-password"
-                  onChange={this.handleZIPInputs}
-                />
                 <div className={styles.par}>
                   <CardElement
                     onChange={this.handleChange}
@@ -149,6 +148,11 @@ class Form extends Component {
                 </div>
               </form>
             </div>
+            <p>
+              By clicking "Pay", you agree to{" "}
+              <a href="www.stripe.com">our terms</a> and the{" "}
+              <a href="www.stripe.com">Stripe Connected Account Agreement</a>.
+            </p>
             <button onClick={this.handleClose} className={styles.close}>
               close
             </button>
