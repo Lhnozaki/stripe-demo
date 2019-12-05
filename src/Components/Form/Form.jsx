@@ -8,7 +8,6 @@ import {
   // PaymentRequestButtonElement,
   injectStripe
 } from "react-stripe-elements";
-// import Axios from "axios";
 
 class Form extends Component {
   constructor(props) {
@@ -16,14 +15,32 @@ class Form extends Component {
 
     this.state = {
       Message: "",
-      success: false
+      success: false,
+      name: "",
+      email: "",
+      ZIP: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeErrorMsg = this.removeErrorMsg.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleNameInputs = this.handleNameInputs.bind(this);
+    this.handleEmailInputs = this.handleEmailInputs.bind(this);
+    this.handleZIPInputs = this.handleZIPInputs.bind(this);
   }
+
+  handleNameInputs = e => {
+    this.setState({ name: e.target.value });
+  };
+
+  handleEmailInputs = e => {
+    this.setState({ email: e.target.value });
+  };
+
+  handleZIPInputs = e => {
+    this.setState({ ZIP: e.target.value });
+  };
 
   handleChange = ({ error }) => {
     this.setState({ Message: "" });
@@ -100,6 +117,24 @@ class Form extends Component {
             <div className={styles.CardDemo}>
               <h3>Please enter your card details for payment</h3>
               <form onSubmit={this.handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  autoComplete="new-password"
+                  onChange={this.handleNameInputs}
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  autoComplete="new-password"
+                  onChange={this.handleEmailInputs}
+                />
+                <input
+                  type="number"
+                  placeholder="ZIP"
+                  autoComplete="new-password"
+                  onChange={this.handleZIPInputs}
+                />
                 <div className={styles.par}>
                   <CardElement
                     onChange={this.handleChange}
