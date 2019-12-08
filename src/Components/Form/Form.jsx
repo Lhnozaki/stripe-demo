@@ -55,13 +55,12 @@ class Form extends Component {
     let amount = this.state.amount;
 
     if (error) {
-      this.setState({ Message: "Please input valid card" });
+      this.setState({ Message: "Please input card information" });
     } else {
       let response = await fetch("/api/charge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, amount })
-        // token.id
       });
 
       console.log(token);
@@ -140,7 +139,15 @@ class Form extends Component {
                     {...this.createOptions()}
                   />
                 </div>
-                <div className={styles.error} role="alert">
+                <div
+                  className={styles.error}
+                  style={
+                    this.state.Message === "Payment Successful!"
+                      ? { color: "green" }
+                      : { color: "red" }
+                  }
+                  role="alert"
+                >
                   {this.state.Message ? this.state.Message : ""}
                 </div>
                 <div className={styles.bt}>
@@ -150,7 +157,8 @@ class Form extends Component {
             </div>
             <p>
               By clicking "Pay", you agree to{" "}
-              <a href="www.stripe.com">our terms</a> and the{" "}
+              <a href="www.stripe.com">our terms</a>
+              and the{" "}
               <a href="www.stripe.com">Stripe Connected Account Agreement</a>.
             </p>
             <button onClick={this.handleClose} className={styles.close}>
